@@ -1,8 +1,8 @@
-[![Docker Pulls](https://img.shields.io/docker/pulls/wurstmeister/kafka.svg)](https://hub.docker.com/r/wurstmeister/kafka/)
-[![Docker Stars](https://img.shields.io/docker/stars/wurstmeister/kafka.svg)](https://hub.docker.com/r/wurstmeister/kafka/)
-[![](https://images.microbadger.com/badges/version/wurstmeister/kafka.svg)](https://microbadger.com/images/wurstmeister/kafka "Get your own version badge on microbadger.com")
-[![](https://images.microbadger.com/badges/image/wurstmeister/kafka.svg)](https://microbadger.com/images/wurstmeister/kafka "Get your own image badge on microbadger.com")
-[![Build Status](https://app.travis-ci.com/wurstmeister/kafka-docker.svg?branch=master)](https://app.travis-ci.com/wurstmeister/kafka-docker)
+[![Docker Pulls](https://img.shields.io/docker/pulls/greensill/kafka.svg)](https://hub.docker.com/r/greensill/kafka/)
+[![Docker Stars](https://img.shields.io/docker/stars/greensill/kafka.svg)](https://hub.docker.com/r/greensill/kafka/)
+[![](https://images.microbadger.com/badges/version/greensill/kafka.svg)](https://microbadger.com/images/greensill/kafka "Get your own version badge on microbadger.com")
+[![](https://images.microbadger.com/badges/image/greensill/kafka.svg)](https://microbadger.com/images/greensill/kafka "Get your own image badge on microbadger.com")
+[![Build Status](https://app.travis-ci.com/greensill/kafka-docker.svg?branch=master)](https://app.travis-ci.com/greensill/kafka-docker)
 
 
 kafka-docker
@@ -10,7 +10,7 @@ kafka-docker
 
 Dockerfile for [Apache Kafka](http://kafka.apache.org/)
 
-The image is available directly from [Docker Hub](https://hub.docker.com/r/wurstmeister/kafka/)
+The image is available directly from [Docker Hub](https://hub.docker.com/r/greensill/kafka/)
 
 Tags and releases
 -----------------
@@ -18,7 +18,7 @@ Tags and releases
 All versions of the image are built from the same set of scripts with only minor variations (i.e. certain features are not supported on older versions). The version format mirrors the Kafka format, `<scala version>-<kafka version>`. Initially, all images are built with the recommended version of scala documented on [http://kafka.apache.org/downloads](http://kafka.apache.org/downloads). To list all available tags:
 
 ```
-curl -s https://registry.hub.docker.com/v2/repositories/wurstmeister/kafka/tags\?page_size\=1024 | jq -r '.results[].name' | sort -u | egrep '\d.\d{2}-.*'
+curl -s https://registry.hub.docker.com/v2/repositories/greensill/kafka/tags\?page_size\=1024 | jq -r '.results[].name' | sort -u | egrep '\d.\d{2}-.*'
 ```
 
 Everytime the image is updated, all tags will be pushed with the latest updates. This should allow for greater consistency across tags, as well as any security updates that have been made to the base image.
@@ -34,11 +34,11 @@ Everytime the image is updated, all tags will be pushed with the latest updates.
 ## Pre-Requisites
 
 - install docker-compose [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/)
-- modify the ```KAFKA_ADVERTISED_HOST_NAME``` in [docker-compose.yml](https://raw.githubusercontent.com/wurstmeister/kafka-docker/master/docker-compose.yml) to match your docker host IP (Note: Do not use localhost or 127.0.0.1 as the host ip if you want to run multiple brokers.)
+- modify the ```KAFKA_ADVERTISED_HOST_NAME``` in [docker-compose.yml](https://raw.githubusercontent.com/greensill/kafka-docker/master/docker-compose.yml) to match your docker host IP (Note: Do not use localhost or 127.0.0.1 as the host ip if you want to run multiple brokers.)
 - if you want to customize any Kafka parameters, simply add them as environment variables in ```docker-compose.yml```, e.g. in order to increase the ```message.max.bytes``` parameter set the environment to ```KAFKA_MESSAGE_MAX_BYTES: 2000000```. To turn off automatic topic creation set ```KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'```
 - Kafka's log4j usage can be customized by adding environment variables prefixed with ```LOG4J_```. These will be mapped to ```log4j.properties```. For example: ```LOG4J_LOGGER_KAFKA_AUTHORIZER_LOGGER=DEBUG, authorizerAppender```
 
-**NOTE:** There are several 'gotchas' with configuring networking. If you are not sure about what the requirements are, please check out the [Connectivity Guide](https://github.com/wurstmeister/kafka-docker/wiki/Connectivity) in the [Wiki](https://github.com/wurstmeister/kafka-docker/wiki)
+**NOTE:** There are several 'gotchas' with configuring networking. If you are not sure about what the requirements are, please check out the [Connectivity Guide](https://github.com/greensill/kafka-docker/wiki/Connectivity) in the [Wiki](https://github.com/greensill/kafka-docker/wiki)
 
 ## Usage
 
@@ -56,7 +56,7 @@ Destroy a cluster:
 
 ## Note
 
-The default ```docker-compose.yml``` should be seen as a starting point. By default each broker will get a new port number and broker id on restart. Depending on your use case this might not be desirable. If you need to use specific ports and broker ids, modify the docker-compose configuration accordingly, e.g. [docker-compose-single-broker.yml](https://github.com/wurstmeister/kafka-docker/blob/master/docker-compose-single-broker.yml):
+The default ```docker-compose.yml``` should be seen as a starting point. By default each broker will get a new port number and broker id on restart. Depending on your use case this might not be desirable. If you need to use specific ports and broker ids, modify the docker-compose configuration accordingly, e.g. [docker-compose-single-broker.yml](https://github.com/greensill/kafka-docker/blob/master/docker-compose-single-broker.yml):
 
 - ```docker-compose -f docker-compose-single-broker.yml up```
 
@@ -81,7 +81,7 @@ Here is an example snippet from ```docker-compose.yml```:
         environment:
           KAFKA_CREATE_TOPICS: "Topic1:1:3,Topic2:1:1:compact"
 
-```Topic 1``` will have 1 partition and 3 replicas, ```Topic 2``` will have 1 partition, 1 replica and a `cleanup.policy` set to `compact`. Also, see FAQ: [Topic compaction does not work](https://github.com/wurstmeister/kafka-docker/wiki#topic-compaction-does-not-work)
+```Topic 1``` will have 1 partition and 3 replicas, ```Topic 2``` will have 1 partition, 1 replica and a `cleanup.policy` set to `compact`. Also, see FAQ: [Topic compaction does not work](https://github.com/greensill/kafka-docker/wiki#topic-compaction-does-not-work)
 
 If you wish to use multi-line YAML or some other delimiter between your topic definitions, override the default `,` separator by specifying the `KAFKA_CREATE_TOPICS_SEPARATOR` environment variable.
 
@@ -205,8 +205,8 @@ See the included sample compose file ```docker-compose-swarm.yml```
 
 ## Release process
 
-See the [wiki](https://github.com/wurstmeister/kafka-docker/wiki/ReleaseProcess) for information on adding or updating versions to release to Dockerhub.
+See the [wiki](https://github.com/greensill/kafka-docker/wiki/ReleaseProcess) for information on adding or updating versions to release to Dockerhub.
 
 ## Tutorial
 
-[http://wurstmeister.github.io/kafka-docker/](http://wurstmeister.github.io/kafka-docker/)
+[http://greensill.github.io/kafka-docker/](http://greensill.github.io/kafka-docker/)

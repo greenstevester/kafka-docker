@@ -1,13 +1,17 @@
 version: '2'
 services:
   zookeeper:
-    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    image: greensill/zookeeper
     ports:
       - "2181:2181"
     restart: unless-stopped
 
   kafka:
-    build: .
+    container_name: kafka-java-11
+    build:
+      context: .
+      dockerfile: Dockerfile-kafka-java-11
     ports:
       - "9092"
     environment:
